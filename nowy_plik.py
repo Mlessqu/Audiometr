@@ -1,0 +1,1 @@
+print("Nowa czesc kodu ktora cos tam robi")
