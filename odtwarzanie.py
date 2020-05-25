@@ -1,8 +1,7 @@
 import pyaudio
 import wave
 
-def odtwarzanie(sciezka):
-    filename = sciezka
+def odtwarzanie(filename):
 
     # Set chunk size of 1024 samples per data frame
     chunk = 1024
