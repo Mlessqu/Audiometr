@@ -14,7 +14,7 @@ def hearing():
     messagebox.showinfo("Audiometr", "Usłyszano")
 
 def ending():
-    messagebox.showinfo("Audiometr", "End")
+    root.destroy()
 
 #lewa ramka
 left_frame = Frame(root, width=200, height=490, bg='grey')
