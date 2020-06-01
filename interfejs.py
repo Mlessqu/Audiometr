@@ -6,7 +6,7 @@ from tkinter import font
 root = Tk()  # okno
 root.title("Audiometr")
 root.geometry("900x500")
-root.config(bg="LightSteelBlue1")
+root.config(bg="LightSteelBlue2")
 font1 = Font(family='Verdana', size=10)
 
 #puste funkcje
