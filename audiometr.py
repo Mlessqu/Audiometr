@@ -1,12 +1,16 @@
 #Główny plik skryptu audiometr
-import odtwarzanie as play
-import os #dla current directory
-import time
+import os  # dla current directory
 import threading
-import pyaudio
+import time
 import wave
-import stop
+
 import keyboard
+import pyaudio
+
+import odtwarzanie as play
+import stop
+
+
 def callback(in_data, frame_count, time_info, status):
     data = wf.readframes(frame_count)
     return (data, pyaudio.paContinue)
@@ -59,4 +63,4 @@ for i in range(len(czasy_slyszalnosci)):
     dB = czasy_slyszalnosci[i] * 1/30 * 2 # 1/30 bo 30s trwa zmiana z 0 do 1 amplitudy(sciezka audio)
     # a jedna zmiana amplitudy się przekłada(chyba, badz w tym przypadku) na 2dB
     db = dB - 60 #maksymalna wartość to 0 więc odejmuję 60
-    print("Decybele w tym momencei to:" + str(dB))
+    print("Decybele w tym momencie to:" + str(dB))
