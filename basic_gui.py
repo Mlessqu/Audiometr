@@ -1,16 +1,46 @@
 from tkinter import *
 from tkinter import messagebox
 import audiometr as play
+import time
 root = Tk() #okno
 root.title("Audiometr")
 root.geometry("900x500")
 root.config(bg="skyblue")
+#----------------------------------------------------------------------------------
 oktawa = play.odtwarzanie() #oktawa odtwarza i zatrzymuje dany plik,zmienną
-#puste funkcje
+lista_plikow = ["125.wav", "250.wav", "500.wav", "1k.wav", "2k.wav", "4k.wav", "8k.wav"]
+czasy_slyszalnosci = []
+#---------------------------------------------------------------------------------
 def starting():
-    oktawa.odtwarzanie("125.wav")
+    global start, i
+    i =0
+    start = time.time()
+    oktawa.odtwarzanie(lista_plikow[i])
+
+
 def hearing():
-    oktawa.stop()
+    global i, start
+    if i < len(lista_plikow)-1:
+        koniec = time.time()
+        oktawa.stop()
+        czas = koniec - start
+        czasy_slyszalnosci.append(czas)
+        i = i + 1
+        start = time.time()
+        oktawa.odtwarzanie((lista_plikow[i]))
+    else:
+        koniec = time.time()
+        oktawa.stop()
+        czas = koniec - start
+        czasy_slyszalnosci.append(czas)
+        print("Tutaj jakies wyswietlanie wynikow")
+        for j in range(len(czasy_slyszalnosci)):
+            print("Plik:" + lista_plikow[j])
+            print("Usłyszano po:" + str(czasy_slyszalnosci[j]))
+            dB = czasy_slyszalnosci[j] * 1 / 30 * 2  # 1/30 bo 30s trwa zmiana z 0 do 1 amplitudy(sciezka audio)
+            # a jedna zmiana amplitudy się przekłada(chyba, badz w tym przypadku) na 2dB
+            db = dB - 60  # maksymalna wartość to 0 więc odejmuję 60
+            print("Decybele w tym momencei to:" + str(dB))
 
 def ending():
     root.destroy()
