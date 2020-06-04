@@ -14,12 +14,13 @@ oktawa = play.odtwarzanie() #oktawa odtwarza i zatrzymuje dany plik,zmienną
 lista_plikow = ["125L.wav", "250L.wav", "500L.wav", "1kL.wav", "2kL.wav", "4kL.wav", "8kL.wav", "125P.wav", "250P.wav", "500P.wav", "1kP.wav", "2kP.wav", "4kP.wav", "8kP.wav"]
 czestotliwosci = ["125", "250", "500", "1000", "2000", "4000", "8000"]
 lista_decybeli = []
-czasy_slyszalnosci = []
+czasy_slyszalnosci_lewe = []
+czasy_slyszalnosci_prawe = []
 #---------------------------------------------------------------------------------
 def starting():
     global start, i
     i =0
-    print("Próba dla prawego ucha.")
+    print("Próba dla lewego ucha.")
     start = time.time()
     oktawa.odtwarzanie(lista_plikow[i])
 
@@ -30,9 +31,12 @@ def hearing():
         koniec = time.time()
         oktawa.stop()
         czas = koniec - start
-        czasy_slyszalnosci.append(czas)
-        if i==8:
-            print("Teraz lewe ucho.")
+        if i < 7:
+            czasy_slyszalnosci_lewe.append(czas)
+        if i >= 7:
+            czasy_slyszalnosci_prawe.append(czas)
+        if i==7:
+            print("Teraz prawe ucho.")
         i = i + 1
         start = time.time()
         oktawa.odtwarzanie((lista_plikow[i]))
@@ -40,25 +44,18 @@ def hearing():
         koniec = time.time()
         oktawa.stop()
         czas = koniec - start
-        czasy_slyszalnosci.append(czas)
+        czasy_slyszalnosci_prawe.append(czas)
 
-        plt.plot(czestotliwosci, czasy_slyszalnosci, label="wszystkie uszy dopóki nie ogarniamy", marker="x",
+        plt.plot(czestotliwosci, czasy_slyszalnosci_lewe, label="Lewe ucho", marker="x",
                      markersize=10)
+        plt.plot(czestotliwosci, czasy_slyszalnosci_prawe, label="Prawe ucho", marker="o", markersize=10)
         plt.title("Wyniki badania")
         plt.xlabel("Częstotliwość (Hz)")
-        plt.ylabel("Glośność (dB)")
+        plt.ylabel("Czas (sekundy)")
         plt.legend()
         plt.grid()
+        plt.show()
 
-
-def results(msg):
-    popup = tk.Tk()
-    popup.wm_title("Koniec badania")
-    label = ttk.Label(popup, text=msg)
-    label.pack(side="top", fill="x", pady=10)
-    B1 = ttk.Button(popup, text="Wyniki", command=plt.show())
-    B1.pack()
-    popup.mainloop()
 
 def ending():
     root.destroy()
