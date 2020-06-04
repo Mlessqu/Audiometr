@@ -1,17 +1,16 @@
 from tkinter import *
 from tkinter import messagebox
-
+import audiometr as play
 root = Tk() #okno
 root.title("Audiometr")
 root.geometry("900x500")
 root.config(bg="skyblue")
-
+oktawa = play.odtwarzanie() #oktawa odtwarza i zatrzymuje dany plik,zmienną
 #puste funkcje
 def starting():
-    messagebox.showinfo("Audiometr", "Start")
-
+    oktawa.odtwarzanie("125.wav")
 def hearing():
-    messagebox.showinfo("Audiometr", "Usłyszano")
+    oktawa.stop()
 
 def ending():
     root.destroy()
