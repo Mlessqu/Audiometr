@@ -11,7 +11,7 @@ root.geometry("900x500")
 root.config(bg="skyblue")
 #----------------------------------------------------------------------------------
 oktawa = play.odtwarzanie() #oktawa odtwarza i zatrzymuje dany plik,zmienną
-lista_plikow = ["125.wav", "250.wav", "500.wav", "1k.wav", "2k.wav", "4k.wav", "8k.wav"]
+lista_plikow = ["125L.wav", "250L.wav", "500L.wav", "1kL.wav", "2kL.wav", "4kL.wav", "8kL.wav", "125P.wav", "250P.wav", "500P.wav", "1kP.wav", "2kP.wav", "4kP.wav", "8kP.wav"]
 czestotliwosci = ["125", "250", "500", "1000", "2000", "4000", "8000"]
 lista_decybeli = []
 czasy_slyszalnosci = []
@@ -19,6 +19,7 @@ czasy_slyszalnosci = []
 def starting():
     global start, i
     i =0
+    print("Próba dla prawego ucha.")
     start = time.time()
     oktawa.odtwarzanie(lista_plikow[i])
 
@@ -30,6 +31,8 @@ def hearing():
         oktawa.stop()
         czas = koniec - start
         czasy_slyszalnosci.append(czas)
+        if i==8:
+            print("Teraz lewe ucho.")
         i = i + 1
         start = time.time()
         oktawa.odtwarzanie((lista_plikow[i]))
