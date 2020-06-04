@@ -1,7 +1,10 @@
+import tkinter as tk
+from tkinter import ttk
 from tkinter import *
 from tkinter import messagebox
 import audiometr as play
 import time
+import matplotlib.pyplot as plt
 root = Tk() #okno
 root.title("Audiometr")
 root.geometry("900x500")
@@ -9,6 +12,8 @@ root.config(bg="skyblue")
 #----------------------------------------------------------------------------------
 oktawa = play.odtwarzanie() #oktawa odtwarza i zatrzymuje dany plik,zmienną
 lista_plikow = ["125.wav", "250.wav", "500.wav", "1k.wav", "2k.wav", "4k.wav", "8k.wav"]
+czestotliwosci = ["125", "250", "500", "1000", "2000", "4000", "8000"]
+lista_decybeli = []
 czasy_slyszalnosci = []
 #---------------------------------------------------------------------------------
 def starting():
@@ -33,14 +38,24 @@ def hearing():
         oktawa.stop()
         czas = koniec - start
         czasy_slyszalnosci.append(czas)
-        print("Tutaj jakies wyswietlanie wynikow")
-        for j in range(len(czasy_slyszalnosci)):
-            print("Plik:" + lista_plikow[j])
-            print("Usłyszano po:" + str(czasy_slyszalnosci[j]))
-            dB = czasy_slyszalnosci[j] * 1 / 30 * 2  # 1/30 bo 30s trwa zmiana z 0 do 1 amplitudy(sciezka audio)
-            # a jedna zmiana amplitudy się przekłada(chyba, badz w tym przypadku) na 2dB
-            db = dB - 60  # maksymalna wartość to 0 więc odejmuję 60
-            print("Decybele w tym momencei to:" + str(dB))
+
+        plt.plot(czestotliwosci, czasy_slyszalnosci, label="wszystkie uszy dopóki nie ogarniamy", marker="x",
+                     markersize=10)
+        plt.title("Wyniki badania")
+        plt.xlabel("Częstotliwość (Hz)")
+        plt.ylabel("Glośność (dB)")
+        plt.legend()
+        plt.grid()
+
+
+def results(msg):
+    popup = tk.Tk()
+    popup.wm_title("Koniec badania")
+    label = ttk.Label(popup, text=msg)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Wyniki", command=plt.show())
+    B1.pack()
+    popup.mainloop()
 
 def ending():
     root.destroy()
@@ -53,6 +68,7 @@ left_frame.grid(row=0, column=0, padx=10, pady=5)
 button_start = Button(root, text="start", padx=75, pady=50,command = starting ).place(x=20, y=20)
 button1 = Button(root, text="słyszę", padx=71, pady=50,command = hearing ).place(x=20, y=170)
 button_stop = Button(root, text="stop ", padx=72, pady=50, command = ending ).place(x=20, y=320)
+
 #prawa ramka - tu ma być wykres
 right_frame = Frame(root, width=650, height=490, bg='grey')
 right_frame.grid(row=0, column=1, padx=10, pady=5)

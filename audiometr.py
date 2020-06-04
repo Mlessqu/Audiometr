@@ -32,7 +32,7 @@ class odtwarzanie():
         chunk = 1024
         self.filename = filename
         print("Odtwarzam:" + filename)
-        self.wf = wave.open(self.sciezka + "\\oktawy\\" + filename, 'rb')
+        self.wf = wave.open(self.sciezka + "/oktawy/" + filename, 'rb')
         #signal = wygeneruj_ton(125, 1, 3)
         data = self.wf.readframes(chunk)
 
