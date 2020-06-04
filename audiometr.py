@@ -1,66 +1,57 @@
 #Główny plik skryptu audiometr
-import os  # dla current directory
-import threading
-import time
-import wave
-
-import keyboard
+#import odtwarzanie as play
+import os #dla current directory
+#import time
+#import threading
 import pyaudio
+import wave
+#import stop
+import numpy as np
 
-import odtwarzanie as play
-import stop
+
+def wygeneruj_ton(tone_hz, Amp, czas):
+    fs = 44100
+    ts = 1 / fs
+    t = np.arange(0, czas, ts)
+    signal = Amp * np.sin(2 * np.pi * tone_hz * t)
+    return signal
+class odtwarzanie():
+    def __init__(self):
+        self.sciezka = os.getcwd()
+        self.p = pyaudio.PyAudio()
+
+    def callback(self, in_data, frame_count, time_info, status): #funkcja callbacku do odtwarzania w tle niezaleznie wzieta z dokumentacji PyAudio
+        data = self.wf.readframes(frame_count)
+        return (data, pyaudio.paContinue)
+
+    def stop(self):
+        print("Stopuję:" + self.filename)
+        self.stream.close()
+
+    def odtwarzanie(self, filename):
+        chunk = 1024
+        self.filename = filename
+        print("Odtwarzam:" + filename)
+        self.wf = wave.open(self.sciezka + "\\oktawy\\" + filename, 'rb')
+        #signal = wygeneruj_ton(125, 1, 3)
+        data = self.wf.readframes(chunk)
+
+        self.stream = self.p.open(format=self.p.get_format_from_width(self.wf.getsampwidth()),
+                                  channels=self.wf.getnchannels(),
+                                  rate=self.wf.getframerate(),
+                                  output=True,
+                                  stream_callback=self.callback)
+
+        #while data != '':
+        #    self.stream.write(data)
+        #    data = self.wf.readframes(chunk)
+        #self.stream.start_stream()
+        # stream.stop_stream()
+        # stream.close()
+        # wf.close()
+        # p.terminate()
 
 
-def callback(in_data, frame_count, time_info, status):
-    data = wf.readframes(frame_count)
-    return (data, pyaudio.paContinue)
-def key_capture_thread():
-    global keep_going
-    while 1:
-        a = keyboard.read_key()
-        if a == "esc":
-            keep_going = False
-            time.sleep(0.1)
-print("Audiometr")
-lista_plikow = ["125.wav", "250.wav", "500.wav", "1k.wav", "2k.wav", "4k.wav", "8k.wav"]
-sciezka = os.getcwd()
-print(sciezka)
-#muzyczka = threading.Thread(target=play.odtwarzanie, args=(sciezka + "\\oktawy\\125.wav", wf, p, stream), daemon=True)
-#muzyczka.start()
-czasy_slyszalnosci = []
-button_capture = threading.Thread(target=key_capture_thread, args=(), name='key_capture_thread', daemon=True)
-button_capture.start()
-for i in range (0, len(lista_plikow)):
-    keep_going = True
-    print("Odtwarzam:" + lista_plikow[i])
-    p = pyaudio.PyAudio()
-    wf = wave.open(sciezka + "\\oktawy\\" + lista_plikow[i], 'rb')
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                    channels=wf.getnchannels(),
-                    rate=wf.getframerate(),
-                    output=True,
-                    stream_callback=callback)
-    play.odtwarzanie(sciezka + "\\oktawy\\" + lista_plikow[i], wf, p, stream)
-    start = time.time()
-    # muzyczka = threading.Thread(target=play.odtwarzanie(sciezka+ "\\oktawy\\"+lista_plikow[i],wf, p, stream))
+    # muzyczka = threading.Thread(target=play.odtwarzanie, args=(sciezka + "\\oktawy\\125.wav", wf, p, stream), daemon=True)
     # muzyczka.start()
-    while keep_going:
-        pass
-    koniec = time.time()
-    stop.stop(p, stream)
-    koniec = time.time()
-    stream.stop_stream()
-    stream.close()
-    wf.close()
-    czas = koniec - start
-    print(czas)
-    czasy_slyszalnosci.append(czas)
-    p.terminate()
 
-for i in range(len(czasy_slyszalnosci)):
-    print("Plik:" + lista_plikow[i])
-    print("Usłyszano po:" + str(czasy_slyszalnosci[i]))
-    dB = czasy_slyszalnosci[i] * 1/30 * 2 # 1/30 bo 30s trwa zmiana z 0 do 1 amplitudy(sciezka audio)
-    # a jedna zmiana amplitudy się przekłada(chyba, badz w tym przypadku) na 2dB
-    db = dB - 60 #maksymalna wartość to 0 więc odejmuję 60
-    print("Decybele w tym momencie to:" + str(dB))
