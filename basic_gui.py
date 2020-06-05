@@ -76,6 +76,8 @@ def rozpocznij():
             canvas = FigureCanvasTkAgg(f, root2)
             canvas.draw()
             canvas.get_tk_widget().grid(row=0, column=1, padx=10, pady=5)
+            button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0', state='disabled',
+                                   command=hearing).place(x=45, y=215)
 
     def ending():
         try:
