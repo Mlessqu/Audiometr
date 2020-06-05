@@ -40,6 +40,7 @@ stop_png = PhotoImage(file="STOP2.png")
 button_stop = Button(root, font=font1, image=stop_png, bg='grey95', border='0',
                      command=ending).place(x=60, y=360)
 
+
 #prawa ramka - tu ma być wykres
 right_frame = Frame(root, width=600, height=490, bg='grey95')
 right_frame.grid(row=0, column=1, padx=10, pady=5)
