@@ -73,7 +73,7 @@ def rozpocznij():
             plt.ylabel("Czas usłyszenia (sekundy)")
             a.grid()
             plt.legend()
-            canvas = FigureCanvasTkAgg(f, root)
+            canvas = FigureCanvasTkAgg(f, root2)
             canvas.draw()
             canvas.get_tk_widget().grid(row=0, column=1, padx=10, pady=5)
 
