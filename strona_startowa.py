@@ -28,7 +28,7 @@ def rozpocznij():
 
     def hearing():
         messagebox.showinfo("Audiometr", "Usłyszano")
-        button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0', state='disabled',
+        button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0', 
                                command=hearing).place(x=45, y=215)
 
     def ending():
