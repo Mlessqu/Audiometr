@@ -23,12 +23,18 @@ def rozpocznij():
     # puste funkcje
     def starting():
         messagebox.showinfo("Audiometr", "Start")
+        button_start = Button(root2, image=start_png, bg='grey95', border='0', state='disabled',
+                              command=starting).place(x=50, y=70)
 
     def hearing():
         messagebox.showinfo("Audiometr", "Usłyszano")
+        button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0', state='disabled',
+                               command=hearing).place(x=45, y=215)
 
     def ending():
         messagebox.showinfo("Audiometr", "End")
+        button_stop = Button(root2, font=font1, image=stop_png, bg='grey95', border='0', state='disabled',
+                             command=ending).place(x=60, y=360)
 
     # lewa ramka
     left_frame = Frame(root2, width=250, height=490, bg='grey95')
