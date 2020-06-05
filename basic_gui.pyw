@@ -39,6 +39,7 @@ def rozpocznij():
         global start, i
         i = 0
         print("Próba dla lewego ucha.")
+        tk.messagebox.showinfo(title="Uwaga!", message="Najpierw lewe ucho!")
         start = time.time()
         oktawa.odtwarzanie(lista_plikow[i])
         button_start = Button(root2, image=start_png, bg='grey95', border='0', state='disabled',
