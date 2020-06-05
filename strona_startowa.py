@@ -19,7 +19,6 @@ def rozpocznij():
     root2.title("Audiometr")
     root2.geometry("900x500")
     root2.config(bg="LightSteelBlue2")
-    plotno = Canvas(root2, width=600, height=490)
 
     # puste funkcje
     def starting():
@@ -51,12 +50,12 @@ def rozpocznij():
 
     instrukcja_png = Image.open("instrukcja.PNG")
     instrukcjaTk = ImageTk.PhotoImage(instrukcja_png)
-    plotno.create_image(600, 490, image=instrukcjaTk)
+    lab = Label(image=instrukcjaTk).place(x=300, y=105)
 
-
-    # prawa ramka - tu ma być wykres
-    right_frame = Frame(root2, width=600, height=490, bg='grey95')
-    right_frame.grid(row=0, column=1, padx=10, pady=5)
+    #
+    # # prawa ramka - tu ma być wykres
+    # right_frame = Frame(root2, width=600, height=490, bg='grey95')
+    # right_frame.grid(row=0, column=1, padx=10, pady=5)
 
     root2.mainloop()
 
