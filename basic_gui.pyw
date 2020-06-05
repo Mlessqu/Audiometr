@@ -43,6 +43,9 @@ def rozpocznij():
         oktawa.odtwarzanie(lista_plikow[i])
         button_start = Button(root2, image=start_png, bg='grey95', border='0', state='disabled',
                               command=starting).place(x=50, y=70)
+        button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0',
+                                   command=hearing, state= 'active').place(x=45, y=215)
+
 
     def hearing():
         global i, start
@@ -97,7 +100,7 @@ def rozpocznij():
 
     slysze_png = tk.PhotoImage(file="SŁYSZĘ2.png")
     button_slysze = Button(root2, font=font1, image=slysze_png, bg='grey95', border='0',
-                           command=hearing).place(x=45, y=215)
+                           command=hearing, state = 'disabled').place(x=45, y=215)
 
     stop_png = tk.PhotoImage(file="STOP2.png")
     button_stop = Button(root2, font=font1, image=stop_png, bg='grey95', border='0',
