@@ -55,6 +55,7 @@ def rozpocznij():
             if i >= 7:
                 czasy_slyszalnosci_prawe.append(czas)
             if i == 6:
+                tk.messagebox.showinfo(title="Uwaga!", message="Teraz prawe ucho!")
                 print("Teraz prawe ucho.")
             i = i + 1
             start = time.time()
